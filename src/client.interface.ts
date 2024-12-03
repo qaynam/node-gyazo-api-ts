@@ -1,3 +1,5 @@
+type HTTPMethod = "GET" | "POST" | "PUT" | "DELETE";
+
 export interface UploadResponse {
   image_id: string;
   permalink_url: string;
@@ -49,6 +51,8 @@ export interface DeleteResponse {
 }
 
 export interface UploadOptions {
+  filename: string;
+  contentType: `image/${"png" | "jpeg" | "gif" | "bmp" | "webp" | "tiff" | "avif"}`;
   access_policy?: "anyone" | "only_me";
   meta_data_is_public?: boolean;
   referer_url: string;
@@ -57,6 +61,67 @@ export interface UploadOptions {
   desc: string;
   created_at: string;
   collection_id: string;
+}
+
+export enum StatusCode {
+  /**
+   * 200	Success
+   */
+  Success = 200,
+  /**
+   * 400	リクエストパラメータが不正なときにこの値が返ります。
+   */
+  BadRequest = 400,
+  /**
+   * 401	ユーザーの認証が必要なときにこの値が返ります。
+   */
+  Unauthorized = 401,
+  /**
+   * 403	アクセスする権限がないときにこの値が返ります。
+   */
+  Forbidden = 403,
+  /**
+   * 404	Not found
+   */
+  NotFound = 404,
+  /**
+   * 422	リクエストパラメータが文法的には正しいがサーバーで処理できないときにこの値が返ります。
+   */
+  UnprocessableEntity = 422,
+  /**
+   * 429	Rate limiting
+   */
+  RateLimiting = 429,
+  /**
+   * 500	Unexpected internal error
+   */
+  InternalError = 500,
+}
+
+interface ErrorBody {
+  /**
+   * @example
+   * "This method requires authentication";
+   */
+  message: string;
+  /**
+   * @example
+   * "/api/images"
+   */
+  request: string;
+  /**
+   * @example
+   * "GET"
+   */
+  method: HTTPMethod;
+}
+
+/**
+ * @see https://https://gyazo.com/api/docs/errors
+ */
+export interface ErrorResponse {
+  statusCode: StatusCode;
+  body: ErrorBody;
 }
 
 export interface ListOptions {
@@ -73,6 +138,16 @@ export interface ListOptions {
    */
   per_page?: number;
 }
+
+export type ClientResponse<SuccessResponse> =
+  | {
+      success: SuccessResponse;
+      error: null;
+    }
+  | {
+      success: null;
+      error: ErrorResponse;
+    };
 
 export interface IGyazo {
   readonly accessToken: string;
@@ -98,7 +173,7 @@ export interface IGyazo {
    * }
    * ```
    */
-  upload(image: Buffer | BinaryData, options: UploadOptions): Promise<UploadResponse | unknown>;
+  upload(image: Buffer, options: UploadOptions): Promise<ClientResponse<UploadResponse>>;
 
   /**
    * list images
@@ -130,7 +205,7 @@ export interface IGyazo {
    *     }
    *  }
    */
-  listImage(options: ListOptions): Promise<ListResponse | unknown>;
+  listImage(options?: ListOptions): Promise<ClientResponse<ListResponse>>;
 
   /**
    * get single image by id
@@ -161,7 +236,7 @@ export interface IGyazo {
    *   }
    * }
    */
-  getImage(imageId: string): Promise<GetImageResponse | unknown>;
+  getImage(imageId: string): Promise<ClientResponse<GetImageResponse>>;
 
   /**
    * delete image by id
@@ -179,5 +254,5 @@ export interface IGyazo {
    *    "type": "png"
    * }
    */
-  delete(imageId: string): Promise<DeleteResponse | unknown>;
+  delete(imageId: string): Promise<ClientResponse<DeleteResponse>>;
 }
