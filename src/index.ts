@@ -1,2 +1,2 @@
 export * from "./client";
-export type * from "./interface";
+export type * from "./client.interface";

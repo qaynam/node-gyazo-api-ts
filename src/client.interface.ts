@@ -55,12 +55,12 @@ export interface UploadOptions {
   contentType: `image/${"png" | "jpeg" | "gif" | "bmp" | "webp" | "tiff" | "avif"}`;
   access_policy?: "anyone" | "only_me";
   meta_data_is_public?: boolean;
-  referer_url: string;
-  app: string;
-  title: string;
-  desc: string;
-  created_at: string;
-  collection_id: string;
+  referer_url?: string;
+  app?: string;
+  title?: string;
+  desc?: string;
+  created_at?: string;
+  collection_id?: string;
 }
 
 export enum StatusCode {
@@ -157,8 +157,19 @@ export interface IGyazo {
    * 画像をアップロードするAPI。
    *
    * @see https://gyazo.com/api/docs/image#upload
-   * @param image
-   * @param options
+   * @param image image buffer
+   * @param options upload options
+   *  @param options.filename ファイル名
+   *  @param options.contentType 画像のMIMEタイプ
+   *  @param options.access_policy アクセスポリシー
+   *  @param options.meta_data_is_public メタデータの公開設定
+   *  @param options.referer_url リファラURL
+   *  @param options.app アプリ名
+   *  @param options.title タイトル
+   *  @param options.desc 説明
+   *  @param options.created_at 作成日時
+   *  @param options.collection_id コレクションID
+   *
    * @returns success: UploadResponse fail: unknown
    *
    * @example

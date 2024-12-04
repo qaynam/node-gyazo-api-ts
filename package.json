@@ -4,21 +4,35 @@
   "type": "module",
   "version": "0.1",
   "description": "API Client for Gyazo.com written in TypeScript",
-  "main": "index.js",
+  "main": "./src/index.ts",
   "scripts": {
     "dev": "ts-node src/index.ts",
+    "build:ts": "tsc -p tsconfig.packup.json ",
     "build": "tsup",
-    "test:watch": "vitest . --coverage=false --reporter=verbose"
+    "test:watch": "vitest . --coverage=false",
+    "test": "vitest run . --coverage=true ",
+    "lint": "eslint . ",
+    "prettier:check": "prettier --check ."
   },
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@cspell/eslint-plugin": "^8.16.1",
-    "@netlify/eslint-config-node": "^7.0.1",
+    "@types/node": "^22.10.1",
+    "@typescript-eslint/parser": "^8.17.0",
+    "@vitest/coverage-istanbul": "^2.1.8",
     "babel-preset-stage-0": "^6.16.0",
     "eslint": "^9.16.0",
     "prettier": "^3.4.1",
     "ts-node": "^10.9.2",
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
+    "typescript-eslint": "^8.17.0",
     "vitest": "^2.1.8"
   },
   "dependencies": {

@@ -4,4 +4,4 @@
 *.log
 node_modules
 tmp
-lib/
+dist/**

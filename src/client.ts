@@ -87,8 +87,8 @@ export default class Gyazo implements IGyazo {
     const formData = new FormData();
     const { filename, contentType, ...leftOptions } = options;
     formData.append("imagedata", imageBuffer, {
-      filename: options.filename,
-      contentType: options.contentType,
+      filename,
+      contentType,
       knownLength: imageBuffer.length,
     });
 
