@@ -1,11 +1,10 @@
-# Gyazo-API
+# Gyazo-API-TS
 
-[Gyazo API](https://gyazo.com/api/docs) wrapper for Node.js
+[Gyazo API](https://gyazo.com/api/docs) wrapper for Node.js written in TypeScript.
 
 - https://github.com/qaynam/node-gyazo-api-ts
 - https://www.npmjs.org/package/gyazo-api-ts
 
-[![Circle CI](https://circleci.com/gh/shokai/node-gyazo-api.svg?style=svg)](https://circleci.com/gh/shokai/node-gyazo-api)
 
 ## Usage
 
@@ -24,6 +23,52 @@ const { success, error} = await gyazo.upload(imageBuffer, {
   contentType: 'image/png',
   /** ...ohter options */
 });
+
+if(error) {
+  console.error(error);
+} else {
+  console.log(success);
+}
+```
+
+### Get Image
+
+```ts
+import { Gyazo } from 'gyazo-api-ts';
+
+const gyazo = new Gyazo('your-access-token');
+const { success, error} = await gyazo.get('image-id');
+
+if(error) {
+  console.error(error);
+} else {
+  console.log(success);
+}
+```
+
+### Delete Image
+
+```ts
+import { Gyazo } from 'gyazo-api-ts';
+
+const gyazo = new Gyazo('your-access-token');
+const { success, error} = await gyazo.delete('image-id');
+
+if(error) {
+  console.error(error);
+} else {
+  console.log(success);
+}
+```
+
+
+### List Images
+
+```ts
+import { Gyazo } from 'gyazo-api-ts';
+
+const gyazo = new Gyazo('your-access-token');
+const { success, error} = await gyazo.list();
 
 if(error) {
   console.error(error);
