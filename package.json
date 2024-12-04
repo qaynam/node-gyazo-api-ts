@@ -1,8 +1,8 @@
 {
-  "name": "gyazo-api",
+  "name": "gyazo-api-ts",
   "private": false,
   "type": "module",
-  "version": "0.1",
+  "version": "0.1.0",
   "description": "API Client for Gyazo.com written in TypeScript",
   "main": "./src/index.ts",
   "scripts": {
@@ -14,6 +14,11 @@
     "lint": "eslint . ",
     "prettier:check": "prettier --check ."
   },
+  "files": [
+    "src",
+    "dist",
+    "package.json"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",

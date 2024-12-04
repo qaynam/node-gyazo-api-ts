@@ -27,7 +27,7 @@ import { otherAPIUrl, uploadAPIUrl } from "./constants";
  *   await gyazo.delete("image-id");
  * ```
  */
-export default class Gyazo implements IGyazo {
+export class Gyazo implements IGyazo {
   private readonly fetchOptions: RequestInit;
 
   constructor(readonly accessToken: string) {
